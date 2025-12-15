@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="km">
 <head>
-    <title>FFmpeg on Cloudflare</title>
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js"></script>
-    <script>
-        const { createFFmpeg } = FFmpeg;
-        const ffmpeg = createFFmpeg({ log: true });
-
-        const load = async () => {
-            document.getElementById('status').innerText = 'កំពុងដំណើរការ Loading...';
-            try {
-                await ffmpeg.load();
-                document.getElementById('status').innerText = 'ជោគជ័យ! FFmpeg បាន Load រួចរាល់។';
-            } catch (error) {
-                document.getElementById('status').innerText = 'បរាជ័យ! សូមពិនិត្យមើល _headers file របស់អ្នក។';
-                console.error(error);
-            }
-        }
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>កម្មវិធីកាត់តវីដេអូ (FFmpeg Wasm)</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; }
+        video { width: 80%; max-width: 600px; margin-top: 10px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; font-size: 16px; margin: 10px; cursor: pointer; }
+        #logs { background: #f0f0f0; padding: 10px; text-align: left; height: 100px; overflow-y: scroll; margin-top: 20px; }
+    </style>
+    
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
 </head>
 <body>
-    <h1>Cloudflare Pages + FFmpeg.wasm</h1>
-    <h2 id="status">ចុចប៊ូតុងខាងក្រោម</h2>
-    <button onclick="load()">Load FFmpeg</button>
+
+    <h1>🎬 កម្មវិធីកាត់តវីដេអូ Online</h1>
+    
+    <p>ជំហានទី ១: រង់ចាំឱ្យ FFmpeg Load ចប់សិន</p>
+    <p id="status" style="color: red; font-weight: bold;">កំពុង Load FFmpeg...</p>
+
+    <input type="file" id="uploader" disabled />
+    
+    <br><br>
+    
+    <h3>វីដេអូដើម៖</h3>
+    <video id="original-video" controls></video>
+
+    <br>
+    <button id="trim-btn" disabled>✂️ កាត់យក ៣ វិនាទីដំបូង</button>
+
+    <h3>វីដេអូដែលកាត់រួច៖</h3>
+    <video id="output-video" controls></video>
+
+    <div id="logs">Logs will appear here...</div>
+
+    <script src="script.js"></script>
 </body>
 </html>
