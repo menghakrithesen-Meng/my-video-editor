@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FFmpeg on Cloudflare</title>
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js"></script>
+    <script>
+        const { createFFmpeg } = FFmpeg;
+        const ffmpeg = createFFmpeg({ log: true });
+
+        const load = async () => {
+            document.getElementById('status').innerText = 'កំពុងដំណើរការ Loading...';
+            try {
+                await ffmpeg.load();
+                document.getElementById('status').innerText = 'ជោគជ័យ! FFmpeg បាន Load រួចរាល់។';
+            } catch (error) {
+                document.getElementById('status').innerText = 'បរាជ័យ! សូមពិនិត្យមើល _headers file របស់អ្នក។';
+                console.error(error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Cloudflare Pages + FFmpeg.wasm</h1>
+    <h2 id="status">ចុចប៊ូតុងខាងក្រោម</h2>
+    <button onclick="load()">Load FFmpeg</button>
+</body>
+</html>
